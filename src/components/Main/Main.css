@@ -1,0 +1,11 @@
+.main {
+ background-color: antiquewhite;
+ min-width: 90dvw;
+ min-height: 90dvh;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin: 2rem;
+}
