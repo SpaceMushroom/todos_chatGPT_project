@@ -1,37 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BsSearch } from "react-icons/bs";
+import { AiOutlinePlus } from "react-icons/ai";
+import "./Todos.css";
 
-const Todos = () => {
+const Todos = ({ handleFocusInput }) => {
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [cookies, setCookies] = useCookies(["todos"]);
-  const todos = cookies.todos || [];
   const [searchValue, setSearchValue] = useState("");
-  const [filter, setFilter] = useState("all"); // Initial filter state
+  const [filter, setFilter] = useState("all");
   const [showInput, setShowInput] = useState(false);
+  const todos = cookies.todos || [];
 
   useEffect(() => {
-    filterTodos();
-  }, [todos, filter, searchValue]);
-
-  const filterTodos = () => {
     let filteredList = todos;
-
-    // Apply filter based on the selected filter option
-    switch (filter) {
-      case "all":
-        break;
-      case "active":
-        filteredList = filteredList.filter((todo) => !todo.checked);
-        break;
-      case "completed":
-        filteredList = filteredList.filter((todo) => todo.checked);
-        break;
-      default:
-        break;
+    if (filter === "active") {
+      filteredList = filteredList.filter((todo) => !todo.checked);
+    } else if (filter === "completed") {
+      filteredList = filteredList.filter((todo) => todo.checked);
     }
 
-    // Apply search filter based on the search input value
     if (searchValue) {
       filteredList = filteredList.filter((todo) =>
         todo.todo.toLowerCase().includes(searchValue.toLowerCase())
@@ -39,13 +27,11 @@ const Todos = () => {
     }
 
     setFilteredTodos(filteredList);
-  };
+  }, [todos, filter, searchValue]);
 
   const handleCheckboxChange = (index) => {
     const updatedFilteredTodos = [...filteredTodos];
     updatedFilteredTodos[index].checked = !updatedFilteredTodos[index].checked;
-
-    // Update filteredTodos state and save to cookies
     setFilteredTodos(updatedFilteredTodos);
     setCookies("todos", updatedFilteredTodos, { path: "/" });
   };
@@ -63,28 +49,29 @@ const Todos = () => {
     setSearchValue("");
   };
 
+  const activeTodosCount = filteredTodos.filter((todo) => !todo.checked).length;
+
   return (
     <div>
-      <div>
-        <ul>
-          {filteredTodos.map((todo, index) => (
-            <li key={index}>
-              {filter !== "completed" && filter !== "active" && !showInput && (
-                <input
-                  type="checkbox"
-                  checked={todo.checked}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-              )}
-              <span>{todo.todo}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <div className="search-container">
+      <ul>
+        {filteredTodos.map((todo, index) => (
+          <li key={index}>
+            {filter !== "completed" && filter !== "active" && !showInput && (
+              <input
+                className="todoInput"
+                type="checkbox"
+                checked={todo.checked}
+                onChange={() => handleCheckboxChange(index)}
+              />
+            )}
+            <span>{todo.todo}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="bottomNav">
+        <div className="searchContainer">
+          <AiOutlinePlus className="plus-icon" onClick={handleFocusInput} />
           <BsSearch onClick={handleSearchIconClick} className="search-icon" />
-
           {showInput && (
             <input
               type="text"
@@ -93,6 +80,7 @@ const Todos = () => {
               placeholder="Search..."
             />
           )}
+          <p className="activeTodos">{activeTodosCount} items left</p>
         </div>
         <div className="filter-container">
           <button onClick={() => handleFilterClick("all")}>All</button>

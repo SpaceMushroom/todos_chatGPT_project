@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import "./Input.css";
 
-const Input = ({ addNewTodo }) => {
+const Input = ({ addNewTodo, inputRef }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (event) => {
@@ -13,7 +14,7 @@ const Input = ({ addNewTodo }) => {
       todo: inputValue,
     };
 
-    addNewTodo && addNewTodo(newTodo);
+    addNewTodo?.(newTodo);
 
     setInputValue("");
   };
@@ -31,8 +32,10 @@ const Input = ({ addNewTodo }) => {
   };
 
   return (
-    <div>
+    <div className="inputDiv">
       <input
+        className="input"
+        ref={inputRef}
         type="text"
         value={inputValue}
         onChange={handleChange}

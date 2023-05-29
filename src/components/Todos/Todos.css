@@ -1,3 +1,47 @@
 li {
     list-style-type: none;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgb(200, 196, 196);
+}
+
+ul {
+    margin: 2rem;
+    padding: 0;
+}
+
+.bottomNav, .searchContainer {
+    display: flex;
+    align-items: center;
+}
+
+.bottomNav {
+    margin: 0 2rem;
+    
+    justify-content: space-between;
+}
+    
+.plus-icon, .search-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 3px;
+}
+
+.activeTodos, .search-icon {
+    color: rgb(82, 84, 84);
+}
+
+.activeTodos {
+    padding:  0.3rem 1rem;
+    margin: 0 1rem;
+    border-left: 2px solid rgb(172, 173, 173);
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    background: white;
+    padding: 0.3rem 1rem;
+    font-size: 1.3rem;
+    color: rgb(82, 84, 84);
+    margin: 0.5rem;
 }

@@ -1,0 +1,17 @@
+.input {
+    height: 2rem;
+    width: 100%;
+    margin: 0 2rem ;
+    border: none;
+    box-shadow: 0px 1px 3px 1px rgb(162, 162, 247);
+    border-radius: 5px;
+}
+
+.input:focus {
+    border: 1px solid blue;
+}
+
+.inputDiv {
+    display: flex;
+    justify-content: center;
+}
